@@ -54,6 +54,8 @@ module HTTP
 
       options[:headers] ||= {}
 
+      request_raw_body = options[:json]
+
       if root = options.delete(:json)
         options[:body] = NSJSONSerialization.dataWithJSONObject(root, options: 0, error: nil)
         options[:headers]["Content-Type"] = "application/json"
@@ -80,6 +82,10 @@ module HTTP
 
       #@cache = self.class.cache
       @response = Response.new
+      @response.request_method = method.to_s
+      @response.request_headers = options[:headers]
+      @response.request_raw_body = request_raw_body
+      @response.request_query = options[:query]
       @response.url = url
 
       @connection = nil

@@ -11,6 +11,10 @@ module HTTP
       @error = nil
       @raw_body = NSMutableData.alloc.init
       @url = nil
+      @request_method = nil
+      @request_headers = nil
+      @request_raw_body = nil
+      @request_query = nil
     end
 
     # Appends a chunk of data to the body.
@@ -100,6 +104,11 @@ module HTTP
     #
     # @api public
     attr_accessor :url
+
+    attr_accessor :request_method
+    attr_accessor :request_headers
+    attr_accessor :request_raw_body
+    attr_accessor :request_query
 
     private
 
