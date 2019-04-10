@@ -17,7 +17,7 @@ module Elevate
         raise ArgumentError, "wrong number of arguments" unless args.empty?
         raise ArgumentError, "block not supplied" unless block_given?
 
-        @handlers[method.to_sym] = block
+        @handlers[method.to_sym] = block.weak!
       else
         super
       end
@@ -28,29 +28,29 @@ module Elevate
     end
 
     def background(&block)
-      @handlers[:background] = block
+      @handlers[:background] = block.weak!
     end
 
     def on_error(&block)
       raise "on_error blocks must accept one parameter" unless block.arity == 1
 
-      @handlers[:on_error] = block
+      @handlers[:on_error] = block.weak!
     end
 
     def on_finish(&block)
       raise "on_finish blocks must accept two parameters" unless block.arity == 2
 
-      @handlers[:on_finish] = block
+      @handlers[:on_finish] = block.weak!
     end
 
     def on_start(&block)
       raise "on_start blocks must accept zero parameters" unless block.arity == 0
 
-      @handlers[:on_start] = block
+      @handlers[:on_start] = block.weak!
     end
 
     def on_update(&block)
-      @handlers[:on_update] = block
+      @handlers[:on_update] = block.weak!
     end
 
     def timeout(seconds)
